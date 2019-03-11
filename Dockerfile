@@ -1,4 +1,8 @@
-FROM ruby:2.5 
+FROM ruby:2.5.3 
+
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+
+RUN apt-get install -y nodejs
 
 RUN mkdir -p /task_manager 
 WORKDIR /task_manager 
