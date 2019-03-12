@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::Base
+class Web::ApplicationController < ApplicationController
   include Concerns::AuthHelper
   helper_method :current_user
 end
