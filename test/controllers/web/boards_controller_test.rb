@@ -6,4 +6,8 @@ class Web::BoardsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  setup do
+    user = create(:user)
+    sign_in_as user
+  end
 end
