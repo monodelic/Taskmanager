@@ -24,6 +24,10 @@ gem 'coveralls', require: false
 gem 'bullet', group: 'development'
 gem 'rollbar'
 gem 'newrelic_rpm'
+gem 'kaminari'
+gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'responders'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
