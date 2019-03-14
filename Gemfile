@@ -22,6 +22,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'simplecov', require: false, group: :test
 gem 'coveralls', require: false
 gem 'bullet', group: 'development'
+gem 'rollbar'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

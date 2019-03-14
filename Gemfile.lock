@@ -192,6 +192,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rollbar (2.19.2)
+      multi_json
     rubocop (0.65.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -302,6 +304,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rails (~> 5.2.2)
+  rollbar
   rubocop
   sass-rails (~> 5.0)
   selenium-webdriver
