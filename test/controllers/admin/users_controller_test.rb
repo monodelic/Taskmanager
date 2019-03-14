@@ -16,7 +16,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       get new_admin_user_url
       assert_response :success
     end
-    
+
     test "should post create" do
         user = attributes_for(:user)
         post admin_users_url, params: { user: user }
@@ -27,6 +27,12 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
         user = create(:user)
         user_attrs = attributes_for(:user)
         patch admin_user_url user.id, params: { user: user_attrs }
+        assert_response :redirect
+    end
+
+    test "should delete destroy" do
+        user = create(:user)
+        delete admin_user_url user.id
         assert_response :redirect
     end
 end
