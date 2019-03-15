@@ -13,6 +13,10 @@ module SignInHelper
       }
     }
   end
+
+  def sign_in(author)
+    session[:user_id] = author.id
+  end
 end
 
 class ActionDispatch::IntegrationTest
@@ -20,9 +24,6 @@ class ActionDispatch::IntegrationTest
 end
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  # fixtures :all
   include FactoryBot::Syntax::Methods
-
-  # Add more helper methods to be used by all tests here...
+  include SignInHelper
 end
