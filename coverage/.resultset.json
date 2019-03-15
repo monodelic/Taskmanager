@@ -27,27 +27,32 @@
         1,
         null
       ],
-      "/task_manager/app/controllers/web/developers_controller.rb": [
+      "/task_manager/app/controllers/web/sessions_controller.rb": [
         1,
         1,
         1,
         null,
         null,
         1,
-        1,
+        9,
         null,
-        1,
-        1,
-        1,
+        9,
+        9,
+        9,
         null,
         0,
         null,
         null,
         null,
         1,
+        1,
+        1,
+        null,
         null,
         1,
+        null,
         1,
+        9,
         null,
         null
       ],
@@ -90,39 +95,6 @@
         40,
         36,
         null,
-        null,
-        null
-      ],
-      "/task_manager/app/models/developer.rb": [
-        1,
-        null
-      ],
-      "/task_manager/app/controllers/web/sessions_controller.rb": [
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        9,
-        null,
-        9,
-        9,
-        9,
-        null,
-        0,
-        null,
-        null,
-        null,
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        null,
-        1,
-        9,
         null,
         null
       ],
@@ -224,6 +196,34 @@
         null,
         null
       ],
+      "/task_manager/app/controllers/web/developers_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/task_manager/app/models/developer.rb": [
+        1,
+        null
+      ],
       "/task_manager/app/mailers/application_mailer.rb": [
         0,
         0,
@@ -294,6 +294,6 @@
         0
       ]
     },
-    "timestamp": 1552582707
+    "timestamp": 1552638326
   }
 }
