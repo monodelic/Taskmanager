@@ -1,1 +1,4 @@
-console.log("Hello World from admin.js");
+import WebpackerReact from "webpacker-react";
+import TaskBoard from "./components/TaskBoard";
+
+WebpackerReact.setup({ TaskBoard });
