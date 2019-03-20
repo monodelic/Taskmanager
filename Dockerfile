@@ -1,4 +1,8 @@
-FROM ruby:2.5 
+FROM ruby:2.5.3 
+
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+
+RUN apt-get install -y nodejs
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
