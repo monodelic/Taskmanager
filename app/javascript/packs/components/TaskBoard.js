@@ -1,5 +1,6 @@
 import React from "react";
 import Board from "react-trello";
+import LaneHeader from "./LaneHeader";
 import axios from "axios";
 import { fetch } from "./Fetch";
 
@@ -80,11 +81,28 @@ export default class TasksBoard extends React.Component {
     });
   }
 
+  onLaneScroll = (requestedPage, state) => {
+    return this.fetchLine(state, requestedPage).then(({ items }) => {
+      return items.map(task => {
+        return {
+          ...task,
+          label: task.state,
+          title: task.name
+        };
+      });
+    });
+  };
+
   render() {
     return (
       <div>
         <h1>Your tasks</h1>
-        <Board data={this.getBoard()} />
+        <Board
+          data={this.getBoard()}
+          onLaneScroll={this.onLaneScroll}
+          customLaneHeader={<LaneHeader />}
+          cardsMeta={this.state}
+        />
       </div>
     );
   }
