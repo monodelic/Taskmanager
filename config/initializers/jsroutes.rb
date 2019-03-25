@@ -1,3 +1,3 @@
-JsRoutes.setup do |config|
-    config.option = value
-  end
+#JsRoutes.setup do |config|
+#    config.option = value
+#  end
