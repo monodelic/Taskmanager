@@ -7,6 +7,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     task = create :task, author: author
     get :show, params: { id: task.id, format: :json }
     assert_response :success
+    pp response.body
   end
 
   test 'should get index' do
@@ -22,7 +23,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
       .merge({ assignee_id: assignee.id })
     post :create, params: { task: task_attributes, format: :json }
     assert_response :created
-
+    
     data = JSON.parse(response.body)
     created_task = Task.find(data['id'])
 

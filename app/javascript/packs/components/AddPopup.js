@@ -10,13 +10,7 @@ import { fetch } from "./Fetch";
 export default class EditPopup extends React.Component {
   state = {
     name: "",
-    description: "",
-    assignee: {
-      id: null,
-      first_name: null,
-      last_name: null,
-      email: null
-    }
+    description: ""
   };
 
   handleNameChange = e => {
@@ -31,8 +25,7 @@ export default class EditPopup extends React.Component {
     fetch("POST", window.Routes.api_v1_tasks_path(), {
       task: {
         name: this.state.name,
-        description: this.state.description,
-        assignee_id: this.state.assignee.id
+        description: this.state.description
       }
     }).then(response => {
       if (response.statusText == "Created") {

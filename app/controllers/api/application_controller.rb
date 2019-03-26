@@ -1,5 +1,8 @@
 class Api::ApplicationController < ApplicationController
-  require 'application_responder'
-  include Concerns::AuthHelper
+  include AuthConcern
+
+  self.responder = JsonResponder
+  respond_to :json
+
   helper_method :current_user
 end
