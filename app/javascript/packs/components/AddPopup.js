@@ -1,4 +1,5 @@
 import React from "react";
+import UserSelect from "./UserSelect";
 // import Modal from "react-bootstrap/Modal";
 // import Button from "react-bootstrap/Button";
 // import FormGroup from "react-bootstrap/FormGroup";
@@ -10,7 +11,13 @@ import { fetch } from "./Fetch";
 export default class EditPopup extends React.Component {
   state = {
     name: "",
-    description: ""
+    description: "",
+    assignee: {
+      id: null,
+      first_name: null,
+      last_name: null,
+      email: null
+    }
   };
 
   handleNameChange = e => {
@@ -34,6 +41,10 @@ export default class EditPopup extends React.Component {
         alert(response.status + " - " + response.statusText);
       }
     });
+  };
+
+  handleAssigneeChange = value => {
+    this.setState({ assignee: value });
   };
 
   render() {
@@ -64,6 +75,12 @@ export default class EditPopup extends React.Component {
                   onChange={this.handleDecriptionChange}
                 />
               </FormGroup>
+              <div>
+                <FormGroup controlId="formControlsSelectAuthor">
+                  <ControlLabel>Assignee:</ControlLabel>
+                  <UserSelect id="Assignee" onChange={this.handleAssigneeChange} value={this.state.assignee} />
+                </FormGroup>
+              </div>
             </form>
           </Modal.Body>
 

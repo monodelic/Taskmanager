@@ -1,4 +1,6 @@
 import React from "react";
+import Select from "react-select";
+import UserSelect from "./UserSelect";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import { fetch } from "./Fetch";
 
@@ -14,9 +16,27 @@ export default class EditPopup extends React.Component {
         first_name: null,
         last_name: null,
         email: null
-      }
-    },
-    isLoading: true
+      },
+      task: {
+        id: null,
+        name: "",
+        description: "",
+        state: null,
+        author: {
+          id: null,
+          first_name: null,
+          last_name: null,
+          email: null
+        },
+        assignee: {
+          id: null,
+          first_name: null,
+          last_name: null,
+          email: null
+        }
+      },
+      isLoading: true
+    }
   };
 
   loadCard = cardId => {

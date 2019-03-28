@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
   namespace :api do
     namespace :v1 do
+      resources :users, only: [:index, :show]
       resources :tasks, only: [:index, :show, :create, :update, :destroy]
       resource :session, only: :create
       resource :board, only: :show

@@ -124,6 +124,34 @@
         null,
         null
       ],
+      "/task_manager/app/controllers/web/developers_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/task_manager/app/models/developer.rb": [
+        1,
+        null
+      ],
       "/task_manager/app/controllers/admin/users_controller.rb": [
         1,
         1,
@@ -186,6 +214,14 @@
         null,
         1,
         7,
+        null,
+        null
+      ],
+      "/task_manager/app/controllers/web/boards_controller.rb": [
+        1,
+        1,
+        1,
+        null,
         null,
         null
       ],
@@ -340,42 +376,6 @@
         null,
         null
       ],
-      "/task_manager/app/controllers/web/boards_controller.rb": [
-        1,
-        1,
-        1,
-        null,
-        null,
-        null
-      ],
-      "/task_manager/app/models/developer.rb": [
-        1,
-        null
-      ],
-      "/task_manager/app/controllers/web/developers_controller.rb": [
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        1,
-        null,
-        1,
-        1,
-        1,
-        null,
-        0,
-        null,
-        null,
-        null,
-        1,
-        null,
-        1,
-        1,
-        null,
-        null
-      ],
       "/task_manager/app/mailers/application_mailer.rb": [
         0,
         0,
@@ -432,7 +432,7 @@
         0
       ]
     },
-    "timestamp": 1553601065
+    "timestamp": 1553694641
   },
   "Unit Tests": {
     "coverage": {
