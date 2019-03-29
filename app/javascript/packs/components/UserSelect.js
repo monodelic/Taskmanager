@@ -19,7 +19,7 @@ export default class UserSelect extends Component {
       return data.items;
     });
   };
-  handleInputChange = (newValue: string) => {
+  handleInputChange = newValue => {
     const inputValue = newValue.replace(/\W/g, "");
     this.setState({ inputValue });
     return inputValue;

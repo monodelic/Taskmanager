@@ -34,7 +34,7 @@ class Task < ApplicationRecord
     end
 
     event :archiving do
-      transition [:new_task, :released] => :archived
+      transition %i[new_task released] => :archived
     end
   end
 end

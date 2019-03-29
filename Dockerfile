@@ -12,7 +12,9 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs 3
 COPY . /task_manager
 RUN yarn install --check-files
-RUN rails assets:precompile
+RUN RAILS_ENV=test bundle exec rails webpacker:compile
+#RUN NODE_ENV=test RAILS_ENV=test bundle exec rails assets:precompile
+#RUN ls ./public/packs-test
 
 EXPOSE 3000 
 CMD bundle exec rails s -b 0.0.0.0 -p 3000

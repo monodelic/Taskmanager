@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   web:
     build: .
@@ -15,6 +15,9 @@ services:
       - BUNDLE_PATH=/bundle_cache
       - DATABASE_HOST=db
       - DATABASE_USERNAME=postgres
+      - COVERALLS_REPO_TOKEN=khcaxtwPaTT1iUbcptGAPag8uqO2lWPFf
+      - ROLLBAR_ACCESS_TOKEN=b47585744d104ac283829af936fdc67e
+    command: bash -c "rm -rf tmp/pids/server.pid; bundle exec rails s -b 0.0.0.0 -p 3000"
   db:
     image: postgres:10.3-alpine
   bundle_cache:

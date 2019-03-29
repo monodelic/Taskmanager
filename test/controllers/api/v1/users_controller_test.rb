@@ -13,4 +13,4 @@ class Api::V1::UsersControllerTest < ActionController::TestCase
     get :index, params: { format: :json }
     assert_response :success
   end
- end
+end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::ApplicationController < Api::ApplicationController
   def build_meta_tasks(collection)
     {
@@ -8,6 +10,7 @@ class Api::V1::ApplicationController < Api::ApplicationController
       per_page: collection.limit_value
     }
   end
+
   def build_meta_users(collection)
     {
       count: collection.count

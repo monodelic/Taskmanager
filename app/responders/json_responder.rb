@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class JsonResponder < ActionController::Responder
   def api_behaviour(*args, &block)
     byebug
@@ -8,5 +10,5 @@ class JsonResponder < ActionController::Responder
     else
       super
     end
-  end    
+  end
 end
