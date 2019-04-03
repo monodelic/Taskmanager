@@ -9,6 +9,6 @@ admin.save
   u.email = "email#{i}@mail.gen"
   u.first_name = "FN#{i}"
   u.last_name = "LN#{i}"
-  u.password = i.to_s
+  u.password = "#{i}"
   u.save
 end

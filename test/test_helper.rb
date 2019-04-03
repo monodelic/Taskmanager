@@ -13,6 +13,10 @@ module SignInHelper
       }
     }
   end
+
+  def sign_in(author)
+    session[:user_id] = author.id
+  end
 end
 
 class ActionDispatch::IntegrationTest
@@ -21,4 +25,5 @@ end
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
+  include SignInHelper
 end
