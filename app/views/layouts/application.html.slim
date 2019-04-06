@@ -6,9 +6,9 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     title= content_for?(:title) ? yield(:title) : "Task Manager"
     = csrf_meta_tags
-    = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = javascript_pack_tag "application"
+    = stylesheet_link_tag "application", :media => "all"
 
   body
     .navbar.navbar-default.navbar-static-top
@@ -36,12 +36,12 @@ html lang="en"
                 li= link_to "Sign in", new_session_path
                 li= link_to "Sign up", new_developer_path
 
-  .container
-    .row
-      .col-lg-12
-        = bootstrap_flash
-        = yield
+    .container
+      .row
+        .col-lg-12
+          = bootstrap_flash
+          = yield
 
-    footer
-      p
-      p &copy; Company 2018
+      footer
+        p
+        p &copy; Company 2018

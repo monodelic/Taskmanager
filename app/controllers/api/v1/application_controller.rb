@@ -1,5 +1,6 @@
-class Api::V1::ApplicationController < ApplicationController
-  respond_to :html, :xml, :json
+# frozen_string_literal: true
+
+class Api::V1::ApplicationController < Api::ApplicationController
   def build_meta_tasks(collection)
     {
       count: collection.count,
@@ -7,6 +8,12 @@ class Api::V1::ApplicationController < ApplicationController
       current_page: collection.current_page,
       total_pages: collection.total_pages,
       per_page: collection.limit_value
+    }
+  end
+
+  def build_meta_users(collection)
+    {
+      count: collection.count
     }
   end
 end
