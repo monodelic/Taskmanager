@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::TasksController < Api::V1::ApplicationController
   def index
     q_params = params[:q] || { s: 'id asc' }
@@ -7,9 +9,9 @@ class Api::V1::TasksController < Api::V1::ApplicationController
                 .page(params[:page])
                 .per(params[:per_page])
     json = {
-             items: tasks.map { |t| TaskSerializer.new(t).as_json },
-             meta: build_meta_tasks(tasks)
-           }
+      items: tasks.map { |t| TaskSerializer.new(t).as_json },
+      meta: build_meta_tasks(tasks)
+    }
     respond_with json
   end
 
@@ -40,11 +42,11 @@ class Api::V1::TasksController < Api::V1::ApplicationController
 
   def destroy
     task = Task.find(params[:id])
-      if task.destroy
-        head(:ok)
-      else
-        render(json: { errors: task.errors }, status: :unprocessable_entity)
-      end
+    if task.destroy
+      head(:ok)
+    else
+      render(json: { errors: task.errors }, status: :unprocessable_entity)
+    end
   end
 
   private

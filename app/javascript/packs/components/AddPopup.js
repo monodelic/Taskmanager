@@ -1,0 +1,87 @@
+import React from "react";
+// import Modal from "react-bootstrap/Modal";
+// import Button from "react-bootstrap/Button";
+// import FormGroup from "react-bootstrap/FormGroup";
+// import FormLabel from "react-bootstrap/FormLabel";
+// import FormControl from "react-bootstrap/FormControl";
+import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import { fetch } from "./Fetch";
+
+export default class EditPopup extends React.Component {
+  state = {
+    name: "",
+    description: "",
+    assignee: {
+      id: null,
+      first_name: null,
+      last_name: null,
+      email: null
+    }
+  };
+
+  handleNameChange = e => {
+    this.setState({ name: e.target.value });
+  };
+
+  handleDecriptionChange = e => {
+    this.setState({ description: e.target.value });
+  };
+
+  handleCardAdd = () => {
+    fetch("POST", window.Routes.api_v1_tasks_path(), {
+      task: {
+        name: this.state.name,
+        description: this.state.description,
+        assignee_id: this.state.assignee.id
+      }
+    }).then(response => {
+      if (response.statusText == "Created") {
+        this.props.onClose(true);
+      } else {
+        alert(response.status + " - " + response.statusText);
+      }
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <Modal show={this.props.show} onHide={this.props.onClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>New task</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <form>
+              <FormGroup controlId="formTaskName">
+                <ControlLabel>Task name:</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.name}
+                  placeholder="Set the name for the task"
+                  onChange={this.handleNameChange}
+                />
+              </FormGroup>
+              <FormGroup controlId="formDescriptionName">
+                <ControlLabel>Task description:</ControlLabel>
+                <FormControl
+                  componentClass="textarea"
+                  value={this.state.description}
+                  placeholder="Set the description for the task"
+                  onChange={this.handleDecriptionChange}
+                />
+              </FormGroup>
+            </form>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button onClick={this.props.onClose}>Close</Button>
+            <Button bsStyle="primary" onClick={this.handleCardAdd}>
+              Save changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
+  }
+}

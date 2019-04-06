@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class Api::ApplicationController < ApplicationController
-  include AuthConcern
-
-  self.responder = JsonResponder
-  respond_to :json
-
+  require 'application_responder'
+  include Concerns::AuthHelper
   helper_method :current_user
 end

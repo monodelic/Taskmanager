@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::ApplicationController < ApplicationController
   respond_to :html, :xml, :json
   def build_meta_tasks(collection)

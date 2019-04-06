@@ -15,14 +15,11 @@ services:
       - BUNDLE_PATH=/bundle_cache
       - DATABASE_HOST=db
       - DATABASE_USERNAME=postgres
-      - NEWRELIC_LICENSE_KEY=e833ffa37df9d5af56540553d736145a9299c1bd
       - COVERALLS_REPO_TOKEN=khcaxtwPaTT1iUbcptGAPag8uqO2lWPFf
       - ROLLBAR_ACCESS_TOKEN=b47585744d104ac283829af936fdc67e
     command: bash -c "rm -rf tmp/pids/server.pid; bundle exec rails s -b 0.0.0.0 -p 3000"
   db:
     image: postgres:10.3-alpine
-    logging:
-      driver: none
   bundle_cache:
     image: busybox
     volumes:
