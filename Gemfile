@@ -33,6 +33,9 @@ gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem "jquery-rails"
+gem 'webpacker'
+gem 'webpacker-react'
+gem 'js-routes'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
