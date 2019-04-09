@@ -11,7 +11,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
                 .includes(:author, :assignee)
     json = {
       items: tasks.map { |t| TaskSerializer.new(t).as_json },
-      meta: build_meta_tasks(tasks)
+      meta: build_meta(tasks)
     }
     respond_with json
   end

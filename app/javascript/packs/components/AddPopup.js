@@ -1,10 +1,5 @@
 import React from "react";
 import UserSelect from "./UserSelect";
-// import Modal from "react-bootstrap/Modal";
-// import Button from "react-bootstrap/Button";
-// import FormGroup from "react-bootstrap/FormGroup";
-// import FormLabel from "react-bootstrap/FormLabel";
-// import FormControl from "react-bootstrap/FormControl";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import { fetch } from "./Fetch";
 
