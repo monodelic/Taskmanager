@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import UserRepository from "../repositories/UserRepository";
 import AsyncSelect from "react-select/lib/Async";
 import FetchService from "../services/FetchService";
 
@@ -13,9 +14,7 @@ export default class UserSelect extends Component {
 
   loadOptions = () => {
     const { inputValue } = this.state;
-    return FetchService.get(
-      window.Routes.api_v1_users_path({ q: { first_name_or_last_name_cont: inputValue }, format: "json" })
-    ).then(({ data }) => {
+    return UserRepository.index({ q: { first_name_or_last_name_cont: inputValue } }).then(({ data }) => {
       return data.items;
     });
   };

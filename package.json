@@ -5,6 +5,7 @@
     "@rails/webpacker": "^4.0.2",
     "axios": "^0.18.0",
     "eslint-config-airbnb": "^17.1.0",
+    "humps": "^2.0.1",
     "react": "^16.8.4",
     "react-bootstrap": "^0.32.3",
     "react-dom": "^16.8.4",

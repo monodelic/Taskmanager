@@ -4,6 +4,7 @@ import LaneHeader from "./LaneHeader";
 import AddPopup from "./AddPopup";
 import EditPopup from "./EditPopup";
 import axios from "axios";
+import TaskRepository from "../repositories/TaskRepository";
 import FetchService from "../services/FetchService";
 import { Button } from "react-bootstrap";
 
@@ -79,27 +80,13 @@ export default class TasksBoard extends React.Component {
   }
 
   fetchLine(state, page = 1) {
-    return FetchService.get(
-      window.Routes.api_v1_tasks_path({ q: { state_eq: state }, page: page, per_page: 10, format: "json" })
-    ).then(({ data }) => {
+    return TaskRepository.index({ q: { state_eq: state }, page: page, per_page: 10 }).then(({ data }) => {
       return data;
     });
   }
 
-  onLaneScroll = (requestedPage, state) => {
-    return this.fetchLine(state, requestedPage).then(({ items }) => {
-      return items.map(task => {
-        return {
-          ...task,
-          label: task.state,
-          title: task.name
-        };
-      });
-    });
-  };
-
   handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
-    FetchService.put(window.Routes.api_v1_task_path(cardId, { format: "json" }), { task: { state: targetLaneId } }).then(() => {
+    TaskRepository.update(cardId, { task: { state: targetLaneId } }).then(() => {
       this.loadLine(sourceLaneId);
       this.loadLine(targetLaneId);
     });
@@ -151,7 +138,6 @@ export default class TasksBoard extends React.Component {
         </Button>
         <Board
           data={this.getBoard()}
-          onLaneScroll={this.onLaneScroll}
           customLaneHeader={<LaneHeader />}
           cardsMeta={this.state}
           draggable
