@@ -1,7 +1,7 @@
 import React from "react";
 import UserSelect from "./UserSelect";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
-import { fetch } from "./Fetch";
+import FetchService from "../services/FetchService";
 
 export default class EditPopup extends React.Component {
   state = {
@@ -24,7 +24,7 @@ export default class EditPopup extends React.Component {
   };
 
   handleCardAdd = () => {
-    fetch("POST", window.Routes.api_v1_tasks_path(), {
+    FetchService.post(window.Routes.api_v1_tasks_path(), {
       task: {
         name: this.state.name,
         description: this.state.description
