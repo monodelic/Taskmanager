@@ -16,9 +16,9 @@ export default {
     return FetchService.put(url, params);
   },
 
-  create(id, params) {
-    const url = window.Routes.api_v1_task_path(id);
-    return FetchService.post(url);
+  create(params) {
+    const url = window.Routes.api_v1_tasks_path();
+    return FetchService.post(url, params);
   },
 
   destroy(id, params) {

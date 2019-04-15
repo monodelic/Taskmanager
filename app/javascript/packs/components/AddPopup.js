@@ -1,6 +1,7 @@
 import React from "react";
 import UserSelect from "./UserSelect";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import TaskRepository from "../repositories/TaskRepository";
 import FetchService from "../services/FetchService";
 
 export default class EditPopup extends React.Component {
@@ -9,8 +10,8 @@ export default class EditPopup extends React.Component {
     description: "",
     assignee: {
       id: null,
-      first_name: null,
-      last_name: null,
+      firstName: null,
+      lastName: null,
       email: null
     }
   };
@@ -24,18 +25,16 @@ export default class EditPopup extends React.Component {
   };
 
   handleCardAdd = () => {
-    FetchService.post(window.Routes.api_v1_tasks_path(), {
+    TaskRepository.create({
       task: {
         name: this.state.name,
         description: this.state.description
       }
-    }).then(response => {
-      if (response.statusText == "Created") {
+    })
+      .then(response => {
         this.props.onClose(true);
-      } else {
-        alert(response.status + " - " + response.statusText);
-      }
-    });
+      })
+      .catch(({ status, statusText }) => alert(`${status} - ${statusText}`));
   };
 
   handleAssigneeChange = value => {

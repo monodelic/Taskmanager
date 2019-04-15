@@ -30,7 +30,7 @@ export default class TasksBoard extends React.Component {
     return {
       id,
       title,
-      total_count: tasks ? tasks.meta.total_count : "None",
+      totalCount: tasks ? tasks.meta.totalCount : "None",
       cards: tasks
         ? tasks.items.map(task => {
             return {
@@ -132,10 +132,12 @@ export default class TasksBoard extends React.Component {
   render() {
     return (
       <div>
-        <h1>Your tasks</h1>
-        <Button bsStyle="primary" onClick={this.handleAddShow}>
-          Create new task
-        </Button>
+        <div className="container">
+          <h1>Your tasks</h1>
+          <Button bsStyle="primary" onClick={this.handleAddShow}>
+            Create new task
+          </Button>
+        </div>
         <Board
           data={this.getBoard()}
           customLaneHeader={<LaneHeader />}

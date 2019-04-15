@@ -1,4 +1,5 @@
 import axios from "axios";
+import humps from "humps";
 
 export function authenticityToken() {
   const token = document.querySelector('meta[name="csrf-token"]');
@@ -22,33 +23,33 @@ export default {
       data: body,
       url
     };
-    return axios(options);
+    return axios(options).then(result => humps.camelizeKeys(result));
   },
   put(url, body) {
     const options = {
       method: "put",
       headers: headers(),
-      data: body,
+      data: humps.decamelizeKeys(body),
       url
     };
-    return axios(options);
+    return axios(options).then(result => humps.camelizeKeys(result));
   },
   delete(url, body) {
     const options = {
       method: "delete",
       headers: headers(),
-      data: body,
+      data: humps.decamelizeKeys(body),
       url
     };
-    return axios(options);
+    return axios(options).then(result => humps.camelizeKeys(result));
   },
   post(url, body) {
     const options = {
       method: "post",
       headers: headers(),
-      data: body,
+      data: humps.decamelizeKeys(body),
       url
     };
-    return axios(options);
+    return axios(options).then(result => humps.camelizeKeys(result));
   }
 };

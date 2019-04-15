@@ -2,6 +2,7 @@ import React from "react";
 import Select from "react-select";
 import UserSelect from "./UserSelect";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import TaskRepository from "../repositories/TaskRepository";
 import FetchService from "../services/FetchService";
 
 export default class EditPopup extends React.Component {
@@ -13,8 +14,8 @@ export default class EditPopup extends React.Component {
       state: null,
       author: {
         id: null,
-        first_name: null,
-        last_name: null,
+        firstName: null,
+        lastName: null,
         email: null
       },
       task: {
@@ -24,14 +25,14 @@ export default class EditPopup extends React.Component {
         state: null,
         author: {
           id: null,
-          first_name: null,
-          last_name: null,
+          firstName: null,
+          lastName: null,
           email: null
         },
         assignee: {
           id: null,
-          first_name: null,
-          last_name: null,
+          firstName: null,
+          lastName: null,
           email: null
         }
       },
@@ -41,7 +42,7 @@ export default class EditPopup extends React.Component {
 
   loadCard = cardId => {
     this.setState({ isLoading: true });
-    FetchService.get(window.Routes.api_v1_task_path(cardId, { format: "json" })).then(({ data }) => {
+    TaskRepository.show(cardId).then(({ data }) => {
       this.setState({ task: data });
       this.setState({ isLoading: false });
     });
@@ -62,29 +63,25 @@ export default class EditPopup extends React.Component {
   };
 
   handleCardEdit = () => {
-    FetchService.put(window.Routes.api_v1_task_path(this.props.cardId, { format: "json" }), {
+    TaskRepository.update(this.props.cardId, {
       name: this.state.task.name,
       description: this.state.task.description,
-      author_id: this.state.task.author.id,
-      assignee_id: this.state.task.assignee ? this.state.task.assignee.id : null,
+      authorId: this.state.task.author.id,
+      assigneeId: this.state.task.assignee ? this.state.task.assignee.id : null,
       state: this.state.task.state
-    }).then(response => {
-      if (response.statusText == "OK") {
+    })
+      .then(response => {
         this.props.onClose(this.state.task.state);
-      } else {
-        alert("Update failed! " + response.status + " - " + response.statusText);
-      }
-    });
+      })
+      .catch(error => alert(error.message));
   };
 
   handleCardDelete = () => {
-    FetchService.delete(window.Routes.api_v1_task_path(this.props.cardId, { format: "json" })).then(response => {
-      if (response.statusText == "OK") {
+    TaskRepository.destroy(this.props.cardId)
+      .then(response => {
         this.props.onClose(this.state.task.state);
-      } else {
-        alert("DELETE failed! " + response.status + " - " + response.statusText);
-      }
-    });
+      })
+      .catch(error => alert(`Delete failed! ${error.message}`));
   };
 
   render() {
@@ -132,7 +129,7 @@ export default class EditPopup extends React.Component {
                 />
               </FormGroup>
             </form>
-            Author: {this.state.task.author.first_name} {this.state.task.author.last_name}
+            Author: {this.state.task.author.firstName} {this.state.task.author.lastName}
           </Modal.Body>
 
           <Modal.Footer>

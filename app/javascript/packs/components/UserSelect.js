@@ -8,7 +8,7 @@ export default class UserSelect extends Component {
     inputValue: ""
   };
 
-  getOptionLabel = ({ first_name, last_name }) => `${first_name} ${last_name}`;
+  getOptionLabel = ({ firstName, lastName }) => `${firstName} ${lastName}`;
 
   getOptionValue = option => option.id;
 
