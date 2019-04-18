@@ -8,7 +8,7 @@ import TaskRepository from "../repositories/TaskRepository";
 import FetchService from "../services/FetchService";
 import { Button } from "react-bootstrap";
 
-export default class TasksBoard extends React.Component {
+export default class TaskBoard extends React.Component {
   state = {
     board: {
       new_task: null,
@@ -80,7 +80,7 @@ export default class TasksBoard extends React.Component {
   }
 
   fetchLine(state, page = 1) {
-    return TaskRepository.index({ q: { state_eq: state }, page: page, per_page: 10 }).then(({ data }) => {
+    return TaskRepository.index({ q: { state_eq: state, s: "id asc" }, page: page, per_page: 10 }).then(({ data }) => {
       return data;
     });
   }
@@ -90,6 +90,30 @@ export default class TasksBoard extends React.Component {
       this.loadLine(sourceLaneId);
       this.loadLine(targetLaneId);
     });
+  };
+
+  handleTaskAdd = task => {
+    return TaskRepository.create(task)
+      .then(() => this.handleAddClose(true))
+      .catch(({ status, statusText }) => alert(`${status} - ${statusText}`));
+  };
+
+  handleCardUpdate = card => {
+    TaskRepository.update(card.id, card)
+      .then(() => {
+        this.handleEditClose();
+        this.loadLines();
+      })
+      .catch(error => alert(error.message));
+  };
+
+  handleCardDelete = cardId => {
+    TaskRepository.destroy(cardId)
+      .then(() => {
+        this.handleEditClose();
+        this.loadLines();
+      })
+      .catch(error => alert(`Delete failed! ${error.message}`));
   };
 
   handleAddShow = () => {
@@ -104,8 +128,7 @@ export default class TasksBoard extends React.Component {
   };
 
   onCardClick = cardId => {
-    this.setState({ editCardId: cardId });
-    this.handleEditShow();
+    this.setState({ editCardId: cardId, editPopupShow: true });
   };
 
   handleEditClose = (edited = "") => {
@@ -125,9 +148,9 @@ export default class TasksBoard extends React.Component {
     }
   };
 
-  handleEditShow = () => {
-    this.setState({ editPopupShow: true });
-  };
+  // handleEditShow = () => {
+  //   this.setState({ editPopupShow: true });
+  // };
 
   render() {
     return (
@@ -135,7 +158,7 @@ export default class TasksBoard extends React.Component {
         <div className="container">
           <h1>Your tasks</h1>
           <Button bsStyle="primary" onClick={this.handleAddShow}>
-            Create new task
+            Add new task
           </Button>
         </div>
         <Board
@@ -143,12 +166,20 @@ export default class TasksBoard extends React.Component {
           customLaneHeader={<LaneHeader />}
           cardsMeta={this.state}
           draggable
-          laneDraggable={false}
+          laneDraggable={true}
           handleDragEnd={this.handleDragEnd}
           onCardClick={this.onCardClick}
         />
-        <AddPopup show={this.state.addPopupShow} onClose={this.handleAddClose} />
-        <EditPopup show={this.state.editPopupShow} onClose={this.handleEditClose} cardId={this.state.editCardId} />
+        <AddPopup show={this.state.addPopupShow} onTaskAdd={this.handleTaskAdd} onClose={this.handleAddClose} />
+        {this.state.editPopupShow && (
+          <EditPopup
+            show={this.state.editPopupShow}
+            onCardDelete={this.handleCardDelete}
+            onCardUpdate={this.handleCardUpdate}
+            onClose={this.handleEditClose}
+            cardId={this.state.editCardId}
+          />
+        )}
       </div>
     );
   }

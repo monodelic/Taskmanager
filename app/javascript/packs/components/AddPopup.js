@@ -25,16 +25,8 @@ export default class EditPopup extends React.Component {
   };
 
   handleCardAdd = () => {
-    TaskRepository.create({
-      task: {
-        name: this.state.name,
-        description: this.state.description
-      }
-    })
-      .then(response => {
-        this.props.onClose(true);
-      })
-      .catch(({ status, statusText }) => alert(`${status} - ${statusText}`));
+    const { name, description, assignee } = this.state;
+    this.props.onTaskAdd({ name, description, assignee });
   };
 
   handleAssigneeChange = value => {

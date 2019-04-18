@@ -2,9 +2,8 @@
 
 class Api::V1::TasksController < Api::V1::ApplicationController
   def index
-    q_params = params[:q] || { s: 'id asc' }
-    tasks = Task.all
-                .ransack(q_params)
+    q_params = params[:q]
+    tasks = Task.ransack(q_params)
                 .result
                 .page(params[:page])
                 .per(params[:per_page])

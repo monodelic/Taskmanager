@@ -43,15 +43,17 @@ export default class EditPopup extends React.Component {
   loadCard = cardId => {
     this.setState({ isLoading: true });
     TaskRepository.show(cardId).then(({ data }) => {
+      console.log(this.props.cardId);
       this.setState({ task: data });
       this.setState({ isLoading: false });
+      console.log(this.state.isLoading);
     });
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.cardId != null && this.props.cardId !== prevProps.cardId) {
-      this.loadCard(this.props.cardId);
-    }
+  componentDidMount() {
+    const { cardId } = this.props;
+    this.loadCard(this.props.cardId);
+    console.log(this.props.cardId);
   }
 
   handleNameChange = e => {
@@ -62,26 +64,24 @@ export default class EditPopup extends React.Component {
     this.setState({ task: { ...this.state.task, description: e.target.value } });
   };
 
-  handleCardEdit = () => {
-    TaskRepository.update(this.props.cardId, {
-      name: this.state.task.name,
-      description: this.state.task.description,
-      authorId: this.state.task.author.id,
-      assigneeId: this.state.task.assignee ? this.state.task.assignee.id : null,
-      state: this.state.task.state
-    })
-      .then(response => {
-        this.props.onClose(this.state.task.state);
-      })
-      .catch(error => alert(error.message));
+  handleCardUpdate = () => {
+    const {
+      task: { name, id, description, author, assignee, state }
+    } = this.state;
+    const cardUpdated = {
+      name,
+      id,
+      description,
+      authorId: author.id,
+      assigneeId: assignee ? assignee.id : null,
+      state
+    };
+    this.props.onCardUpdate(cardUpdated);
   };
 
   handleCardDelete = () => {
-    TaskRepository.destroy(this.props.cardId)
-      .then(response => {
-        this.props.onClose(this.state.task.state);
-      })
-      .catch(error => alert(`Delete failed! ${error.message}`));
+    const { cardId } = this.props;
+    this.props.onCardDelete(cardId);
   };
 
   render() {
@@ -137,7 +137,7 @@ export default class EditPopup extends React.Component {
               Delete
             </Button>
             <Button onClick={this.props.onClose}>Close</Button>
-            <Button bsStyle="primary" onClick={this.handleCardEdit}>
+            <Button bsStyle="primary" onClick={this.handleCardUpdate}>
               Save changes
             </Button>
           </Modal.Footer>

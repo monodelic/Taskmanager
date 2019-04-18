@@ -17,8 +17,8 @@ class Task < ApplicationRecord
       transition in_development: :in_qa
     end
 
-    event :to_codereview do
-      transition in_qa: :in_codereview
+    event :to_code_review do
+      transition in_qa: :in_code_review
     end
 
     event :back_to_development do
@@ -26,7 +26,7 @@ class Task < ApplicationRecord
     end
 
     event :finish_review do
-      transition in_codereview: :ready_for_release
+      transition in_code_review: :ready_for_release
     end
 
     event :release do
