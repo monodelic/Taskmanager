@@ -1,12 +1,13 @@
-import React from "react";
+import { Button } from "react-bootstrap";
+import axios from "axios";
 import Board from "react-trello";
-import LaneHeader from "./LaneHeader";
+import React from "react";
+
 import AddPopup from "./AddPopup";
 import EditPopup from "./EditPopup";
-import axios from "axios";
-import TaskRepository from "../repositories/TaskRepository";
 import FetchService from "../services/FetchService";
-import { Button } from "react-bootstrap";
+import LaneHeader from "./LaneHeader";
+import TaskRepository from "../repositories/TaskRepository";
 
 export default class TaskBoard extends React.Component {
   state = {

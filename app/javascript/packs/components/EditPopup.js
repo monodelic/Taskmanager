@@ -1,11 +1,21 @@
+import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import PropTypes from "prop-types";
 import React from "react";
 import Select from "react-select";
-import UserSelect from "./UserSelect";
-import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
-import TaskRepository from "../repositories/TaskRepository";
+
 import FetchService from "../services/FetchService";
+import TaskRepository from "../repositories/TaskRepository";
+import UserSelect from "./UserSelect";
 
 export default class EditPopup extends React.Component {
+  static propTypes = {
+    onCardUpdate: PropTypes.func,
+    loadCard: PropTypes.func,
+    onCardDelete: PropTypes.func,
+    show: PropTypes.bool,
+    onHide: PropTypes.func,
+    onClick: PropTypes.func
+  };
   state = {
     task: {
       id: null,
@@ -18,23 +28,11 @@ export default class EditPopup extends React.Component {
         lastName: null,
         email: null
       },
-      task: {
+      assignee: {
         id: null,
-        name: "",
-        description: "",
-        state: null,
-        author: {
-          id: null,
-          firstName: null,
-          lastName: null,
-          email: null
-        },
-        assignee: {
-          id: null,
-          firstName: null,
-          lastName: null,
-          email: null
-        }
+        firstName: null,
+        lastName: null,
+        email: null
       },
       isLoading: true
     }
@@ -43,17 +41,14 @@ export default class EditPopup extends React.Component {
   loadCard = cardId => {
     this.setState({ isLoading: true });
     TaskRepository.show(cardId).then(({ data }) => {
-      console.log(this.props.cardId);
       this.setState({ task: data });
       this.setState({ isLoading: false });
-      console.log(this.state.isLoading);
     });
   };
 
   componentDidMount() {
     const { cardId } = this.props;
     this.loadCard(this.props.cardId);
-    console.log(this.props.cardId);
   }
 
   handleNameChange = e => {
@@ -99,12 +94,15 @@ export default class EditPopup extends React.Component {
       );
     }
 
+    const {
+      task: { id, state, name, description, author }
+    } = this.state;
     return (
       <div>
         <Modal show={this.props.show} onHide={this.props.onClose}>
           <Modal.Header closeButton>
             <Modal.Title>
-              Task # {this.state.task.id} [{this.state.task.state}]
+              Task # {id} [{state}]
             </Modal.Title>
           </Modal.Header>
 
@@ -114,7 +112,7 @@ export default class EditPopup extends React.Component {
                 <ControlLabel>Task name:</ControlLabel>
                 <FormControl
                   type="text"
-                  value={this.state.task.name}
+                  value={name}
                   placeholder="Set the name for the task"
                   onChange={this.handleNameChange}
                 />
@@ -123,13 +121,13 @@ export default class EditPopup extends React.Component {
                 <ControlLabel>Task description:</ControlLabel>
                 <FormControl
                   componentClass="textarea"
-                  value={this.state.task.description}
+                  value={description}
                   placeholder="Set the description for the task"
                   onChange={this.handleDecriptionChange}
                 />
               </FormGroup>
             </form>
-            Author: {this.state.task.author.firstName} {this.state.task.author.lastName}
+            Author: {author.firstName} {author.lastName}
           </Modal.Body>
 
           <Modal.Footer>
