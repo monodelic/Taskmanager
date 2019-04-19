@@ -9,6 +9,37 @@ import FetchService from "../services/FetchService";
 import LaneHeader from "./LaneHeader";
 import TaskRepository from "../repositories/TaskRepository";
 
+const BOARD_COLUMNS = {
+  newTask: {
+    title: "New",
+    key: "new_task"
+  },
+  inDevelopment: {
+    title: "In Dev",
+    key: "in_development"
+  },
+  inQa: {
+    title: "in Qa",
+    key: "in_qa"
+  },
+  inCodeReview: {
+    title: "in CR",
+    key: "in_code_review"
+  },
+  readyForRelease: {
+    title: "Ready for release",
+    key: "ready_for_release"
+  },
+  released: {
+    title: "Released",
+    key: "released"
+  },
+  archived: {
+    title: "Archived",
+    key: "archived"
+  }
+};
+
 export default class TaskBoard extends React.Component {
   state = {
     board: {
@@ -45,17 +76,8 @@ export default class TaskBoard extends React.Component {
   }
 
   getBoard() {
-    return {
-      lanes: [
-        this.generateLane("new_task", "New"),
-        this.generateLane("in_development", "In Dev"),
-        this.generateLane("in_qa", "In QA"),
-        this.generateLane("in_code_review", "in CR"),
-        this.generateLane("ready_for_release", "Ready for release"),
-        this.generateLane("released", "Released"),
-        this.generateLane("archived", "Archived")
-      ]
-    };
+    const lanes = Object.values(BOARD_COLUMNS).map(({ key, title }) => this.generateLane(key, title));
+    return { lanes };
   }
 
   loadLines() {
@@ -123,7 +145,7 @@ export default class TaskBoard extends React.Component {
 
   handleAddClose = (added = false) => {
     this.setState({ addPopupShow: false });
-    if (added == true) {
+    if (added) {
       this.loadLine("new_task");
     }
   };
@@ -132,7 +154,7 @@ export default class TaskBoard extends React.Component {
     this.setState({ editCardId: cardId, editPopupShow: true });
   };
 
-  handleEditClose = (edited = "") => {
+  handleEditClose = edited => {
     this.setState({ editPopupShow: false, editCardId: null });
     switch (edited) {
       case "new_task":
@@ -149,11 +171,9 @@ export default class TaskBoard extends React.Component {
     }
   };
 
-  // handleEditShow = () => {
-  //   this.setState({ editPopupShow: true });
-  // };
-
   render() {
+    console.log(this.getBoard());
+    console.log(this.getBoard1());
     return (
       <div>
         <div className="container">
