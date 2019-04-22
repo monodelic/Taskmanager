@@ -2,8 +2,8 @@ import AsyncSelect from "react-select/lib/Async";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 
-import FetchService from "../services/FetchService";
-import UserRepository from "../repositories/UserRepository";
+import FetchService from "services/FetchService";
+import UserRepository from "repositories/UserRepository";
 
 export default class UserSelect extends Component {
   static propTypes = {

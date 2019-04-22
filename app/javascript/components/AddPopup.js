@@ -1,12 +1,12 @@
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Component } from "react";
 
-import FetchService from "../services/FetchService";
-import TaskRepository from "../repositories/TaskRepository";
-import UserSelect from "./UserSelect";
+import FetchService from "services/FetchService";
+import TaskRepository from "repositories/TaskRepository";
+import UserSelect from "components/UserSelect";
 
-export default class AddPopup extends React.Component {
+export default class AddPopup extends Component {
   static propTypes = {
     show: PropTypes.bool,
     onClose: PropTypes.func,

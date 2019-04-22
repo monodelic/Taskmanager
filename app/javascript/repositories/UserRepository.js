@@ -1,4 +1,4 @@
-import FetchService from "../services/FetchService";
+import FetchService from "services/FetchService";
 
 export default {
   index(params) {

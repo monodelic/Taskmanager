@@ -1,13 +1,13 @@
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import Board from "react-trello";
-import React from "react";
+import React, { Component } from "react";
 
-import AddPopup from "./AddPopup";
-import EditPopup from "./EditPopup";
-import FetchService from "../services/FetchService";
-import LaneHeader from "./LaneHeader";
-import TaskRepository from "../repositories/TaskRepository";
+import AddPopup from "components/AddPopup";
+import EditPopup from "components/EditPopup";
+import FetchService from "services/FetchService";
+import LaneHeader from "components/LaneHeader";
+import TaskRepository from "repositories/TaskRepository";
 
 const BOARD_COLUMNS = {
   newTask: {
@@ -40,7 +40,7 @@ const BOARD_COLUMNS = {
   }
 };
 
-export default class TaskBoard extends React.Component {
+export default class TaskBoard extends Component {
   state = {
     board: {
       new_task: null,
@@ -81,13 +81,7 @@ export default class TaskBoard extends React.Component {
   }
 
   loadLines() {
-    this.loadLine("new_task");
-    this.loadLine("in_development");
-    this.loadLine("in_qa");
-    this.loadLine("in_code_review");
-    this.loadLine("ready_for_release");
-    this.loadLine("released");
-    this.loadLine("archived");
+    Object.values(BOARD_COLUMNS).forEach(({ key }) => this.loadLine(key));
   }
 
   componentDidMount() {
@@ -103,9 +97,7 @@ export default class TaskBoard extends React.Component {
   }
 
   fetchLine(state, page = 1) {
-    return TaskRepository.index({ q: { state_eq: state, s: "id asc" }, page: page, per_page: 10 }).then(({ data }) => {
-      return data;
-    });
+    return TaskRepository.index({ q: { state_eq: state, s: "id asc" }, page: page, per_page: 10 }).then(({ data }) => data);
   }
 
   handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
@@ -117,14 +109,17 @@ export default class TaskBoard extends React.Component {
 
   handleTaskAdd = task => {
     return TaskRepository.create(task)
-      .then(() => this.handleAddClose(true))
+      .then(() => {
+        this.handleAddPopupClose();
+        this.loadLines();
+      })
       .catch(({ status, statusText }) => alert(`${status} - ${statusText}`));
   };
 
   handleCardUpdate = card => {
     TaskRepository.update(card.id, card)
       .then(() => {
-        this.handleEditClose();
+        this.handleEditPopupClose();
         this.loadLines();
       })
       .catch(error => alert(error.message));
@@ -133,52 +128,34 @@ export default class TaskBoard extends React.Component {
   handleCardDelete = cardId => {
     TaskRepository.destroy(cardId)
       .then(() => {
-        this.handleEditClose();
+        this.handleEditPopupClose();
         this.loadLines();
       })
       .catch(error => alert(`Delete failed! ${error.message}`));
   };
 
-  handleAddShow = () => {
+  handleAddPopupShow = () => {
     this.setState({ addPopupShow: true });
   };
 
-  handleAddClose = (added = false) => {
+  handleAddPopupClose = () => {
     this.setState({ addPopupShow: false });
-    if (added) {
-      this.loadLine("new_task");
-    }
+  };
+
+  handleEditPopupClose = () => {
+    this.setState({ editPopupShow: false, editCardId: null });
   };
 
   onCardClick = cardId => {
     this.setState({ editCardId: cardId, editPopupShow: true });
   };
 
-  handleEditClose = edited => {
-    this.setState({ editPopupShow: false, editCardId: null });
-    switch (edited) {
-      case "new_task":
-      case "in_development":
-      case "in_qa":
-      case "in_code_review":
-      case "ready_for_release":
-      case "released":
-      case "archived":
-        this.loadLine(edited);
-        break;
-      default:
-        break;
-    }
-  };
-
   render() {
-    console.log(this.getBoard());
-    console.log(this.getBoard1());
     return (
       <div>
         <div className="container">
           <h1>Your tasks</h1>
-          <Button bsStyle="primary" onClick={this.handleAddShow}>
+          <Button bsStyle="primary" onClick={this.handleAddPopupShow}>
             Add new task
           </Button>
         </div>
@@ -191,13 +168,13 @@ export default class TaskBoard extends React.Component {
           handleDragEnd={this.handleDragEnd}
           onCardClick={this.onCardClick}
         />
-        <AddPopup show={this.state.addPopupShow} onTaskAdd={this.handleTaskAdd} onClose={this.handleAddClose} />
+        <AddPopup show={this.state.addPopupShow} onTaskAdd={this.handleTaskAdd} onClose={this.handleAddPopupClose} />
         {this.state.editPopupShow && (
           <EditPopup
             show={this.state.editPopupShow}
             onCardDelete={this.handleCardDelete}
             onCardUpdate={this.handleCardUpdate}
-            onClose={this.handleEditClose}
+            onClose={this.handleEditPopupClose}
             cardId={this.state.editCardId}
           />
         )}

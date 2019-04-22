@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Component } from "react";
 
-export default class LaneHeader extends React.Component {
+export default class LaneHeader extends Component {
   static propTypes = {
     title: PropTypes.string,
     cards: PropTypes.array,

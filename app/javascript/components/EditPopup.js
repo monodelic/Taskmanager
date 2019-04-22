@@ -1,13 +1,13 @@
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Component } from "react";
 import Select from "react-select";
 
-import FetchService from "../services/FetchService";
-import TaskRepository from "../repositories/TaskRepository";
-import UserSelect from "./UserSelect";
+import FetchService from "services/FetchService";
+import TaskRepository from "repositories/TaskRepository";
+import UserSelect from "components/UserSelect";
 
-export default class EditPopup extends React.Component {
+export default class EditPopup extends Component {
   static propTypes = {
     onCardUpdate: PropTypes.func,
     loadCard: PropTypes.func,
