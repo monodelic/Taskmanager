@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::ApplicationController < ApplicationController
-  include Concerns::AuthHelper
+  include AuthConcern
   before_action :authenticate_user!, :authorize
   helper_method :current_user
 

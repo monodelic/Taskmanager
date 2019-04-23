@@ -8,6 +8,7 @@ services:
       - .:/task_manager:cached
     ports:
       - 3000:3000
+      - 3035:3035
       - 8080:8080
     volumes_from:
       - bundle_cache
